@@ -1,11 +1,8 @@
+import { SkeletonTransaction } from '@app/_/AddressInfo/Transactions/SkeletonTransaction';
 import { useTransactionsList } from '@app/_/AddressInfo/Transactions/useTransactionsList';
 import { type AddressFormSchema } from '@app/_/AddressInfo/address-form-schema';
 import { Card, CardContent, CardLabelValue } from '@components/Card';
 import { ERC20AmountDisplay } from '@components/ERC20AmountDisplay';
-import { SkeletonAddress } from '@components/SkeletonAddress';
-import { SkeletonHash } from '@components/SkeletonHash';
-import { SkeletonNumber } from '@components/SkeletonNumber';
-import { SkeletonText } from '@components/SkeletonText';
 import { TextLink } from '@components/TextLink';
 import { ETHER_DECIMALS } from '@constants';
 import { formatDate } from '@utils/formatDate';
@@ -13,14 +10,23 @@ import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useInView } from 'react-intersection-observer';
 
+const NUMBER_OF_MORE_SKELETON_CARDS_TO_SHOW = 2;
+
+const loadingArray = [...Array(NUMBER_OF_MORE_SKELETON_CARDS_TO_SHOW).keys()];
+
 export const Transactions = () => {
   const { control } = useFormContext<AddressFormSchema>();
   const address = useWatch({
     control,
     name: 'address',
   });
-  const { fetchNextPage, hasNextPage, isFetchingNextPage, transactions } =
-    useTransactionsList({ address });
+  const {
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    transactions,
+  } = useTransactionsList({ address });
   const { inView, ref: endOfPage } = useInView();
 
   useEffect(() => {
@@ -83,17 +89,10 @@ export const Transactions = () => {
           </CardContent>
         </Card>
       ))}
-      {isFetchingNextPage ? (
-        <Card>
-          <CardContent className="space-y-3">
-            <CardLabelValue label="Date" value={<SkeletonText />} />
-            <CardLabelValue label="From" value={<SkeletonAddress />} />
-            <CardLabelValue label="To" value={<SkeletonAddress />} />
-            <CardLabelValue label="Hash" value={<SkeletonHash />} />
-            <CardLabelValue label="Value" value={<SkeletonNumber />} />
-          </CardContent>
-        </Card>
-      ) : null}
+      {isPending
+        ? loadingArray.map((id) => <SkeletonTransaction key={id} />)
+        : null}
+      {!isPending && isFetchingNextPage ? <SkeletonTransaction /> : null}
       <div className="relative">
         <div ref={endOfPage} className="absolute -top-96" />
       </div>
