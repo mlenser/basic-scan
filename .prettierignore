@@ -1,0 +1,8 @@
+.github
+.husky
+.next
+.swc
+coverage
+node_modules
+out
+public
