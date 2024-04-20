@@ -27,12 +27,10 @@ type OriginalDataType = {
 
 const TIMESTAMP_MULTIPLIER = 1000;
 
-export const getTransactionsList = async ({
-  address,
-}: {
-  address: Address | undefined;
-}): Promise<
-  {
+export type GetTransactionsListResponse = {
+  onLastPage: boolean;
+  page: number;
+  transactions: {
     blockHash: string;
     blockNumber: string;
     confirmations: string;
@@ -53,15 +51,25 @@ export const getTransactionsList = async ({
     transactionIndex: string;
     txreceipt_status: string;
     value: string;
-  }[]
-> => {
+  }[];
+};
+
+export const getTransactionsList = async ({
+  address,
+  limit,
+  page,
+}: {
+  address: Address | undefined;
+  limit: number;
+  page: number;
+}): Promise<GetTransactionsListResponse> => {
   const paramsObj = {
     action: 'txlist',
     address: String(address),
     apikey: process.env.ETHERSCAN_API || '',
     module: 'account',
-    offset: '10', // TODO: useInfiniteQuery to paginate
-    page: '1', // TODO: useInfiniteQuery to paginate
+    offset: limit.toString(),
+    page: page.toString(),
     sort: 'asc',
   };
   const searchParams = new URLSearchParams(paramsObj);
@@ -72,10 +80,14 @@ export const getTransactionsList = async ({
   const response = await fetch(url);
   const data = await response.json();
 
-  const originalData: OriginalDataType[] = data.result;
+  const originalResult: OriginalDataType[] = data.result;
 
-  return originalData.map(({ timeStamp, ...rest }) => ({
-    ...rest,
-    timeStamp: Number(timeStamp) * TIMESTAMP_MULTIPLIER,
-  }));
+  return {
+    onLastPage: false,
+    page,
+    transactions: originalResult.map(({ timeStamp, ...rest }) => ({
+      ...rest,
+      timeStamp: Number(timeStamp) * TIMESTAMP_MULTIPLIER,
+    })),
+  };
 };
