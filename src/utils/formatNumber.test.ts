@@ -25,8 +25,4 @@ describe('formatNumber', () => {
     const amount = 1.23456789;
     expect(formatNumber({ amount, maxDecimals: 2 })).toBe('1.23');
   });
-  it('should display dash if configured and value is 0', () => {
-    expect(formatNumber({ amount: 0, useDashForZero: true })).toBe('—');
-    expect(formatNumber({ amount: 1, useDashForZero: true })).toBe('1');
-  });
 });

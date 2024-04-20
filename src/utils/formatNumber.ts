@@ -10,7 +10,6 @@ export const formatNumber = ({
   notation,
   signDisplay,
   standardDecimals,
-  useDashForZero = false,
   useGrouping = true,
 }: {
   amount: bigint | number;
@@ -18,14 +17,9 @@ export const formatNumber = ({
   notation?: 'standard' | 'scientific' | 'engineering' | 'compact' | undefined;
   signDisplay?: 'auto' | 'never' | 'always' | 'exceptZero' | undefined;
   standardDecimals?: boolean;
-  useDashForZero?: boolean;
   useGrouping?: boolean;
-}) => {
-  if (amount === 0 && useDashForZero) {
-    return '—';
-  }
-
-  return Intl.NumberFormat(DEFAULT_LOCALE, {
+}) =>
+  Intl.NumberFormat(DEFAULT_LOCALE, {
     maximumFractionDigits: maxDecimals,
     maximumSignificantDigits:
       maxDecimals !== undefined && maxDecimals < JS_MAX_SAFE_SIGNIFICANT_DIGITS
@@ -36,4 +30,3 @@ export const formatNumber = ({
     signDisplay,
     useGrouping,
   }).format(amount);
-};
