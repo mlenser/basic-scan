@@ -16,6 +16,10 @@ const config: Config = {
       },
       colors: {
         destructive: 'hsl(var(--destructive))',
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
       },
     },
   },
