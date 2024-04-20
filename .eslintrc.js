@@ -78,7 +78,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-non-null-assertion': ['error'],
     '@typescript-eslint/no-unused-vars': 'off',
-    'arrow-body-style': ['error', 'always'],
+    'arrow-body-style': ['error', 'as-needed'],
     curly: ['error', 'all'],
     eqeqeq: ['error', 'always'],
     'id-length': [
