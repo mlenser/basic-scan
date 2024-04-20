@@ -44,6 +44,12 @@ module.exports = {
         'no-restricted-exports': 'off',
       },
     },
+    {
+      files: ['**/*.test.tsx', '**/*.test.ts', '**/*.stories.tsx'],
+      rules: {
+        'no-magic-numbers': 'off',
+      },
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
