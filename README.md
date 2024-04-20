@@ -1,26 +1,25 @@
 This is a sample showing the balance and transactions of an address.
 
-## Getting Started
+## Production
 
-First, run the development server:
+See https://basic-scan.vercel.app
 
-```bash
-pnpm dev
-```
+## Local development
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Run the development server: `pnpm dev`
+2. Open [http://localhost:3000](http://localhost:3000)
 
 ## Using the app
 
 - Enter an address (such as `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`) into the input to see the address' balance and transactions
 - Scroll to see more transactions
 
-## Expected behavior
+### Expected behavior
 
 - `0x388c818ca8b9251b393131c08a736a67ccb19297` should have 0.0001 ETH
 - `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 should` have 0.074062847318492938 ETH and lots of transactions
 
-## Potential improvements
+### Potential improvements
 
 - Add USD values. Could be done with defillama and displayed.
 - Add more fields to the transactions like Etherscan shows such as gas price, block, fees, etc.
