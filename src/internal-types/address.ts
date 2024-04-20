@@ -1,7 +1,12 @@
-import { HexSchema } from '@internal-types/hex';
+import { z } from 'zod';
 
 const ADDRESS_LENGTH = 42;
-export const AddressSchema = HexSchema.refine(
-  (val) => val.length === ADDRESS_LENGTH,
-  'Invalid address length'
-).transform((val) => val.toLowerCase() as `0x${string}`);
+
+export const AddressSchema = z
+  .string()
+  .startsWith('0x', { message: 'Enter an address that starts with 0x' })
+  .length(ADDRESS_LENGTH, {
+    message: `Enter an address with ${ADDRESS_LENGTH} characters`,
+  })
+  .toLowerCase()
+  .trim();

@@ -16,17 +16,19 @@ import { type z } from 'zod';
 
 export const AddressForm = () => {
   const form = useForm<z.infer<typeof addressFormSchema>>({
+    mode: 'onTouched',
     resolver: zodResolver(addressFormSchema),
   });
+  const { control, handleSubmit } = form;
   const onSubmit = (values: z.infer<typeof addressFormSchema>) => {
     console.log('values', values);
   };
 
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
         <FormField
-          control={form.control}
+          control={control}
           name="address"
           render={({ field }) => (
             <FormItem>
