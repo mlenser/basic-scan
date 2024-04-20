@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { type HTMLAttributes, forwardRef } from 'react';
+import { type HTMLAttributes, type ReactNode, forwardRef, useId } from 'react';
 
 export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
@@ -59,7 +59,7 @@ export const CardContent = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={clsx('p-6 pt-0', className)} {...props} />
+  <div ref={ref} className={clsx('p-6', className)} {...props} />
 ));
 CardContent.displayName = 'CardContent';
 
@@ -74,3 +74,30 @@ export const CardFooter = forwardRef<
   />
 ));
 CardFooter.displayName = 'CardFooter';
+
+export interface CardLabelValueProps extends HTMLAttributes<HTMLDivElement> {
+  label: ReactNode;
+  orientation?: 'horizontal' | 'vertical';
+  value: ReactNode;
+}
+export const CardLabelValue = forwardRef<HTMLDivElement, CardLabelValueProps>(
+  ({ className, label, orientation = 'vertical', value, ...rest }, ref) => {
+    const id = useId();
+
+    return (
+      <div ref={ref} className={className} {...rest}>
+        <label htmlFor={id}>{label}</label>
+        {orientation === 'horizontal' ? ' ' : ''}
+        <div
+          className={clsx('break-all', {
+            inline: orientation === 'horizontal',
+          })}
+          id={id}
+        >
+          {value}
+        </div>
+      </div>
+    );
+  }
+);
+CardLabelValue.displayName = 'CardLabelValue';

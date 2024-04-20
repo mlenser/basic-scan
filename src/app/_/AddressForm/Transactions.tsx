@@ -1,6 +1,9 @@
 import { type AddressFormSchema } from '@app/_/AddressForm/address-form-schema';
 import { useTransactionsList } from '@app/_/AddressForm/useTransactionsList';
-import { Card, CardContent } from '@components/Card';
+import { Card, CardContent, CardLabelValue } from '@components/Card';
+import { ERC20AmountDisplay } from '@components/ERC20AmountDisplay';
+import { ETHER_DECIMALS } from '@constants';
+import { formatDate } from '@utils/formatDate';
 import { useFormContext, useWatch } from 'react-hook-form';
 import type { Address } from 'viem';
 
@@ -12,10 +15,31 @@ export const Transactions = () => {
   });
   const { transactions } = useTransactionsList({ address: address as Address }); // TODO: fix address type
 
-  console.log('transactions', transactions);
   return transactions?.map((transaction) => (
     <Card key={transaction.hash}>
-      <CardContent>{transaction.from}</CardContent>
+      <CardContent className="space-y-3">
+        <CardLabelValue
+          label="Date"
+          value={formatDate({
+            date: transaction.timeStamp,
+          })}
+        />
+        <CardLabelValue label="From" value={transaction.from} />
+        <CardLabelValue label="To" value={transaction.to} />
+        <CardLabelValue label="Hash" value={transaction.hash} />
+        <CardLabelValue
+          label="Value"
+          value={
+            <ERC20AmountDisplay
+              erc20={{
+                decimals: ETHER_DECIMALS,
+                symbol: 'ETH',
+                value: BigInt(transaction.value),
+              }}
+            />
+          }
+        />
+      </CardContent>
     </Card>
   ));
 };

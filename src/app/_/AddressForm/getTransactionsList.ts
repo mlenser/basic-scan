@@ -2,6 +2,31 @@
 
 import { type Address } from 'viem';
 
+type OriginalDataType = {
+  blockHash: string;
+  blockNumber: string;
+  confirmations: string;
+  contractAddress: string;
+  cumulativeGasUsed: string;
+  from: Address;
+  functionName: string;
+  gas: string;
+  gasPrice: string;
+  gasUsed: string;
+  hash: string;
+  input: string;
+  isError: string;
+  methodId: string;
+  nonce: string;
+  timeStamp: string;
+  to: Address;
+  transactionIndex: string;
+  txreceipt_status: string;
+  value: string;
+};
+
+const TIMESTAMP_MULTIPLIER = 1000;
+
 export const getTransactionsList = async ({
   address,
 }: {
@@ -23,7 +48,7 @@ export const getTransactionsList = async ({
     isError: string;
     methodId: string;
     nonce: string;
-    timeStamp: string;
+    timeStamp: number;
     to: Address;
     transactionIndex: string;
     txreceipt_status: string;
@@ -46,5 +71,11 @@ export const getTransactionsList = async ({
   );
   const response = await fetch(url);
   const data = await response.json();
-  return data.result;
+
+  const originalData: OriginalDataType[] = data.result;
+
+  return originalData.map(({ timeStamp, ...rest }) => ({
+    ...rest,
+    timeStamp: Number(timeStamp) * TIMESTAMP_MULTIPLIER,
+  }));
 };
