@@ -1,5 +1,6 @@
 'use client';
 
+import { Balance } from '@app/_/AddressForm/Balance';
 import { addressFormSchema } from '@app/_/AddressForm/address-form-schema';
 import {
   Form,
@@ -40,6 +41,8 @@ export const AddressForm = () => {
             </FormItem>
           )}
         />
+
+        <Balance />
       </form>
     </Form>
   );
