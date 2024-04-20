@@ -1,7 +1,11 @@
+import { LayoutProviders } from '@app/_/LayoutProviders';
 import '@app/_/styles/globals.css';
-import { clsx } from 'clsx';
-import type { Metadata } from 'next';
+import { wagmiConfig } from '@config/wagmi';
+import { type Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { headers } from 'next/headers';
+import { type ReactNode } from 'react';
+import { cookieToInitialState } from 'wagmi';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -10,14 +14,25 @@ export const metadata: Metadata = {
   title: 'Create Next App',
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children: ReactNode;
+}>) => {
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    headers().get('cookie')
+  );
+
   return (
-    <html className="h-full" lang="en">
-      <body className={clsx(inter.className, 'h-full')}>{children}</body>
+    <html lang="en">
+      <body className={inter.className}>
+        <LayoutProviders initialState={initialState}>
+          {children}
+        </LayoutProviders>
+      </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
