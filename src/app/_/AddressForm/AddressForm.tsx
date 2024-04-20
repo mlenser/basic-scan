@@ -15,14 +15,10 @@ export const AddressForm = () => {
     mode: 'onTouched',
     resolver: zodResolver(addressFormSchema),
   });
-  const { handleSubmit } = form;
-  const onSubmit = (values: z.infer<typeof addressFormSchema>) => {
-    console.log('values', values);
-  };
 
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+      <form className="space-y-8">
         <AddressInput />
         <Balance />
         <Transactions />
