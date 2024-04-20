@@ -1,4 +1,4 @@
-import { type AddressFormSchema } from '@app/_/AddressForm/address-form-schema';
+import { type AddressFormSchema } from '@app/_/AddressInfo/address-form-schema';
 import {
   FormControl,
   FormField,

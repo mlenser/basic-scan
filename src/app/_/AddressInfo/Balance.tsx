@@ -1,6 +1,6 @@
 'use client';
 
-import { type AddressFormSchema } from '@app/_/AddressForm/address-form-schema';
+import { type AddressFormSchema } from '@app/_/AddressInfo/address-form-schema';
 import { ERC20AmountDisplay } from '@components/ERC20AmountDisplay';
 import { Label } from '@components/Label';
 import { useFormContext, useWatch } from 'react-hook-form';
