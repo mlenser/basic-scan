@@ -3,7 +3,7 @@
 import {
   type GetTransactionsListResponse,
   getTransactionsList,
-} from '@app/_/AddressInfo/getTransactionsList';
+} from '@app/_/AddressInfo/Transactions/getTransactionsList';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { type Address } from 'viem';
 

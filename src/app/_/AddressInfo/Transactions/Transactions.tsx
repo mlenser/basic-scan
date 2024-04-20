@@ -1,5 +1,5 @@
+import { useTransactionsList } from '@app/_/AddressInfo/Transactions/useTransactionsList';
 import { type AddressFormSchema } from '@app/_/AddressInfo/address-form-schema';
-import { useTransactionsList } from '@app/_/AddressInfo/useTransactionsList';
 import { Card, CardContent, CardLabelValue } from '@components/Card';
 import { ERC20AmountDisplay } from '@components/ERC20AmountDisplay';
 import { SkeletonAddress } from '@components/SkeletonAddress';
