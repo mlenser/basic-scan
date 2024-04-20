@@ -6,7 +6,6 @@ import { TextLink } from '@components/TextLink';
 import { ETHER_DECIMALS } from '@constants';
 import { formatDate } from '@utils/formatDate';
 import { useFormContext, useWatch } from 'react-hook-form';
-import type { Address } from 'viem';
 
 export const Transactions = () => {
   const { control } = useFormContext<AddressFormSchema>();
@@ -14,7 +13,7 @@ export const Transactions = () => {
     control,
     name: 'address',
   });
-  const { transactions } = useTransactionsList({ address: address as Address }); // TODO: fix address type
+  const { transactions } = useTransactionsList({ address });
 
   return transactions?.map((transaction) => (
     <Card key={transaction.hash}>

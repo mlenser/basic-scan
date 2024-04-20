@@ -9,4 +9,5 @@ export const AddressSchema = z
     message: `Enter an address with ${ADDRESS_LENGTH} characters`,
   })
   .toLowerCase()
-  .trim();
+  .trim()
+  .transform((val) => val as `0x${string}`);
