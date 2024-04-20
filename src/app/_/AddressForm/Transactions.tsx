@@ -2,6 +2,7 @@ import { type AddressFormSchema } from '@app/_/AddressForm/address-form-schema';
 import { useTransactionsList } from '@app/_/AddressForm/useTransactionsList';
 import { Card, CardContent, CardLabelValue } from '@components/Card';
 import { ERC20AmountDisplay } from '@components/ERC20AmountDisplay';
+import { TextLink } from '@components/TextLink';
 import { ETHER_DECIMALS } from '@constants';
 import { formatDate } from '@utils/formatDate';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -24,9 +25,30 @@ export const Transactions = () => {
             date: transaction.timeStamp,
           })}
         />
-        <CardLabelValue label="From" value={transaction.from} />
-        <CardLabelValue label="To" value={transaction.to} />
-        <CardLabelValue label="Hash" value={transaction.hash} />
+        <CardLabelValue
+          label="From"
+          value={
+            <TextLink href={`https://etherscan.io/address/${transaction.from}`}>
+              {transaction.from}
+            </TextLink>
+          }
+        />
+        <CardLabelValue
+          label="To"
+          value={
+            <TextLink href={`https://etherscan.io/address/${transaction.to}`}>
+              {transaction.to}
+            </TextLink>
+          }
+        />
+        <CardLabelValue
+          label="Hash"
+          value={
+            <TextLink href={`https://etherscan.io/tx/${transaction.hash}`}>
+              {transaction.hash}
+            </TextLink>
+          }
+        />
         <CardLabelValue
           label="Value"
           value={
