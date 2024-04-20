@@ -7,11 +7,16 @@ import { addressFormSchema } from '@app/_/AddressInfo/address-form-schema';
 import { Form } from '@components/Form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { type Address } from 'viem';
 import { type z } from 'zod';
 
 export const AddressInfo = () => {
-  const form = useForm<z.infer<typeof addressFormSchema>>({
-    defaultValues: { address: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045' },
+  const form = useForm<
+    { address: Address | string },
+    void,
+    z.infer<typeof addressFormSchema>
+  >({
+    defaultValues: { address: '' },
     mode: 'onTouched',
     resolver: zodResolver(addressFormSchema),
   });

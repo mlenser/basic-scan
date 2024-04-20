@@ -89,7 +89,7 @@ export const Transactions = () => {
           </CardContent>
         </Card>
       ))}
-      {isPending
+      {address && isPending
         ? loadingArray.map((id) => <SkeletonTransaction key={id} />)
         : null}
       {!isPending && isFetchingNextPage ? <SkeletonTransaction /> : null}
